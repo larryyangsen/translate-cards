@@ -1,61 +1,6 @@
 import React, { useState } from 'react';
 import { IDictionaryData } from './dictionary';
 
-const exampleData: IDictionaryData[] = [
-    {
-        word: 'hello',
-        phonetics: [
-            {
-                text: '/həˈloʊ/',
-                audio: 'https://lex-audio.useremarkable.com/mp3/hello_us_1_rr.mp3',
-            },
-            {
-                text: '/hɛˈloʊ/',
-                audio: 'https://lex-audio.useremarkable.com/mp3/hello_us_2_rr.mp3',
-            },
-        ],
-        meanings: [
-            {
-                partOfSpeech: 'exclamation',
-                definitions: [
-                    {
-                        definition: 'Used as a greeting or to begin a phone conversation.',
-                        example: 'hello there, Katie!',
-                    },
-                ],
-            },
-            {
-                partOfSpeech: 'noun',
-                definitions: [
-                    {
-                        definition: 'An utterance of “hello”; a greeting.',
-                        example: 'she was getting polite nods and hellos from people',
-                        synonyms: [
-                            'greeting',
-                            'welcome',
-                            'salutation',
-                            'saluting',
-                            'hailing',
-                            'address',
-                            'hello',
-                            'hallo',
-                        ],
-                    },
-                ],
-            },
-            {
-                partOfSpeech: 'intransitive verb',
-                definitions: [
-                    {
-                        definition: 'Say or shout “hello”; greet someone.',
-                        example: 'I pressed the phone button and helloed',
-                    },
-                ],
-            },
-        ],
-    },
-];
-
 interface ITranslateProps {
     data?: IDictionaryData;
     top?: number;
@@ -97,7 +42,7 @@ const Translate = ({ data, top = 0, left = 0 }: ITranslateProps) => {
                     <h3>meanings</h3>
                     {data.meanings.length > 1 && (
                         <div className="space-x-2 flex">
-                            <button onClick={handleGoPrevMeaning()}>
+                            <button className="hover:opacity-70" onClick={handleGoPrevMeaning()}>
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     className="h-6 w-6"
@@ -114,7 +59,7 @@ const Translate = ({ data, top = 0, left = 0 }: ITranslateProps) => {
                                 </svg>
                             </button>
                             <span>{meaningIndex + 1}</span>
-                            <button onClick={handleGoNextMeaning()}>
+                            <button className="hover:opacity-60" onClick={handleGoNextMeaning()}>
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     className="h-6 w-6"
@@ -144,6 +89,10 @@ const Translate = ({ data, top = 0, left = 0 }: ITranslateProps) => {
                 ))}
             </div>
         </div>
-    ) : null;
+    ) : (
+        <div style={{ top, left }} className="bg-gray-700 z-10 p-4 absolute  rounded-2xl  text-white">
+            No Results
+        </div>
+    );
 };
 export default Translate;
