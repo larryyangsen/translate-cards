@@ -85,7 +85,7 @@ const Translate = ({ data, top = 0, left = 0 }: ITranslateProps) => {
     };
 
     return data ? (
-        <div style={{ top, left }} className="bg-gray-700 z-10 p-4 absolute  rounded-2xl w-72 text-white">
+        <div style={{ top, left }} className="bg-gray-700 z-10 p-4 absolute  rounded-2xl  text-white">
             <h3 className="capitalize text-4xl font-bold ">{data.word}</h3>
             <h4 className="space-x-2">
                 {data.phonetics.map(({ text }, i) => (
@@ -140,11 +140,6 @@ const Translate = ({ data, top = 0, left = 0 }: ITranslateProps) => {
                     <div className="space-y-2" key={i}>
                         <p>{definition}</p>
                         <p>{example}</p>
-                        <ul>
-                            {synonyms.map((synonym, i) => (
-                                <li key={i}>{synonym}</li>
-                            ))}
-                        </ul>
                     </div>
                 ))}
             </div>

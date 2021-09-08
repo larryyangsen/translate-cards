@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useDebouncedCallback } from 'use-debounce/lib';
+import { useDebouncedCallback } from 'use-debounce';
 import getDicts, { IDictionaryData } from './dictionary';
 import Translate from './Translate';
 
@@ -30,7 +30,7 @@ function App() {
     const ref = useRef<HTMLDivElement>(null);
     const [search, setSearch] = useState('hello');
     const [leftTop, setLeftTop] = useState({ left: 0, top: 0 });
-    const [highlightedWords, setHighlightedWords] = useState(highlightWords(search, words.split(' '), ref));
+    const [[hasSearched,highlightedWords], setHighlightedWords] = useState(highlightWords(search, words.split(' '), ref));
     const [dicts, setDicts] = useState<IDictionaryData[]>([]);
 
     const handleInputChanged = useDebouncedCallback((e: React.FocusEvent<HTMLInputElement>) => {
@@ -62,7 +62,7 @@ function App() {
     }, [highlightedWords]);
     return (
         <div className="container  font-sans min-h-screen flex mx-auto">
-            <Translate data={dicts?.[0]} top={leftTop.top} left={leftTop.left} />
+            {hasSearched && <Translate data={dicts?.[0]} top={leftTop.top} left={leftTop.left} />}
             <div className="w-1/2 flex  flex-col m-auto">
                 <h1 className="text-5xl">Find Term and Dictionary</h1>
                 <div className="relative w-full mt-4">
