@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { useDebouncedCallback } from 'use-debounce/lib';
 import getDicts, { IDictionaryData } from './dictionary';
 import Translate from './Translate';
 
@@ -32,9 +33,9 @@ function App() {
     const [highlightedWords, setHighlightedWords] = useState(highlightWords(search, words.split(' '), ref));
     const [dicts, setDicts] = useState<IDictionaryData[]>([]);
 
-    const handleInputBlur = async (e: React.FocusEvent<HTMLInputElement>) => {
+    const handleInputChanged = useDebouncedCallback((e: React.FocusEvent<HTMLInputElement>) => {
         setSearch(e.target.value ?? '');
-    };
+    }, 200)
 
     useEffect(() => {
         const highlighted = highlightWords(search, words.split(' '), ref);
@@ -66,7 +67,7 @@ function App() {
                 <h1 className="text-5xl">Find Term and Dictionary</h1>
                 <div className="relative w-full mt-4">
                     <input
-                        onBlur={handleInputBlur}
+                        onChange={handleInputBlur}
                         type="text"
                         placeholder="Search the term in article"
                         className="px-12 py-4 w-full border-none focus:ring-0 focus:border-none shadow-lg rounded-xl"
