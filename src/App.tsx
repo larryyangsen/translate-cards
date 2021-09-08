@@ -67,7 +67,7 @@ function App() {
                 <h1 className="text-5xl">Find Term and Dictionary</h1>
                 <div className="relative w-full mt-4">
                     <input
-                        onChange={handleInputBlur}
+                        onChange={handleInputChanged}
                         type="text"
                         placeholder="Search the term in article"
                         className="px-12 py-4 w-full border-none focus:ring-0 focus:border-none shadow-lg rounded-xl"
