@@ -19,21 +19,26 @@ const highlightWords = (search: string, words: string[], ref: React.RefObject<HT
         }
         return word + ' ';
     });
-    return [
+    return {
         hasSearched,
-        <div ref={ref} className="p-8 break-normal space-x-1 leading-8 border-2 mt-4 text-gray-400 rounded-lg bg-white">
-            {highlightedWords}
-        </div>,
-    ];
+        highlightedWords: (
+            <div
+                ref={ref}
+                className="p-8 break-normal space-x-1 leading-8 border-2 mt-4 text-gray-400 rounded-lg bg-white"
+            >
+                {highlightedWords}
+            </div>
+        ),
+    };
 };
 const Card = () => {
     const ref = useRef<HTMLDivElement>(null);
     const [search, setSearch] = useState('legend');
     const [leftTop, setLeftTop] = useState({ left: 0, top: 0 });
-    const [[hasSearched, highlightedWords], setHighlightedWords] = useState(
+    const [{ hasSearched, highlightedWords }, setHighlightedWords] = useState(
         highlightWords(search, words.split(' '), ref)
     );
-    const { data: dicts = [] } = useQuery(['dict', search], () => getDicts(search));
+    const { data: dicts = [] } = useQuery(['dict', search], () => getDicts(search), { enabled: hasSearched });
     const handleInputChanged = useDebouncedCallback((e: React.FocusEvent<HTMLInputElement>) => {
         setSearch(e.target.value ?? '');
     }, 200);
